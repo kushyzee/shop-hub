@@ -18,8 +18,9 @@ export interface CartState extends Product {
 export interface CartContextType {
   cartState: CartState[];
   addToCart: (product: Product) => void;
-  // removeFromCart: (productId: number) => void;
-  // clearCart: () => void;
+  removeFromCart: (product: Product) => void;
+  deleteItemFromCart: (itemId: { id: number }) => void;
+  clearCart: () => void;
 }
 
 export interface CartReducerType {
@@ -34,6 +35,10 @@ export type CartReducerAction =
     }
   | {
       type: "REMOVE_ITEM";
+      payload: Product;
+    }
+  | {
+      type: "DELETE_ITEM";
       payload: { id: number };
     }
   | {

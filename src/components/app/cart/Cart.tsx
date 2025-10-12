@@ -4,6 +4,7 @@ import { Button } from "../../ui/button";
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
@@ -12,7 +13,13 @@ import {
 import CartItems from "./CartItems";
 
 export default function Cart() {
-  const { cartState } = useCart();
+  const {
+    cartState,
+    addToCart,
+    removeFromCart,
+    deleteItemFromCart,
+    clearCart,
+  } = useCart();
 
   const totalCartItems = cartState.reduce(
     (total, item) => total + item.quantity,
@@ -39,11 +46,19 @@ export default function Cart() {
       <SheetContent className="w-full">
         <SheetHeader className="border-b border-muted-foreground/30 shadow-sm">
           <SheetTitle className="text-2xl font-bold">Shopping Cart</SheetTitle>
+          <SheetDescription className="sr-only">
+            View your items in cart
+          </SheetDescription>
         </SheetHeader>
-        <CartItems cartState={cartState} />
+        <CartItems
+          addToCart={addToCart}
+          cartState={cartState}
+          deleteItemFromCart={deleteItemFromCart}
+          removeFromCart={removeFromCart}
+        />
         <SheetFooter className="border-t border-muted-foreground/30">
           <Button size="lg">Proceed to Checkout</Button>
-          <Button size="lg" variant="outline">
+          <Button size="lg" variant="outline" onClick={() => clearCart()}>
             Clear Cart
           </Button>
         </SheetFooter>
