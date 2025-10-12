@@ -1,9 +1,9 @@
 import { useReducer, type ReactNode } from "react";
-import type { CartItems, CartReducerAction, Product } from "../types/myTypes";
+import type { CartState, CartReducerAction, Product } from "../types/myTypes";
 import { CartContext } from "./cartContext";
 
 // reducer function
-function cartReducer(cart: CartItems[], action: CartReducerAction) {
+function cartReducer(cart: CartState[], action: CartReducerAction) {
   const { payload, type } = action;
 
   switch (type) {
@@ -33,7 +33,7 @@ export default function CartProvider({ children }: { children: ReactNode }) {
   };
 
   const contextValue = {
-    cartItems: cartState,
+    cartState,
     addToCart,
   };
 

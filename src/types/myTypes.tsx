@@ -11,12 +11,12 @@ export interface Product {
   price: number;
 }
 
-export interface CartItems extends Product {
+export interface CartState extends Product {
   quantity: number;
 }
 
 export interface CartContextType {
-  cartItems: CartItems[];
+  cartState: CartState[];
   addToCart: (product: Product) => void;
   // removeFromCart: (productId: number) => void;
   // clearCart: () => void;
