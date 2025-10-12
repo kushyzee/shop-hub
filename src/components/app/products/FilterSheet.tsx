@@ -12,7 +12,7 @@ import FilterCategories from "./FilterCategories";
 export default function FilterSheet() {
   return (
     <Sheet>
-      <SheetTrigger className="lg:hidden">
+      <SheetTrigger asChild className="lg:hidden">
         <Button variant="outline">
           <SlidersHorizontal />
           Filters

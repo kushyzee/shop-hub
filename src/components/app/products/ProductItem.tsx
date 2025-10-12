@@ -12,6 +12,7 @@ import {
 } from "../../ui/card";
 import { formatCurrency, truncateString } from "../../../lib/myFunctions";
 import type { Product } from "../../../types/myTypes";
+import { useCart } from "../../../hooks/customHooks";
 
 interface ProductItemProps {
   product: Product;
@@ -19,6 +20,12 @@ interface ProductItemProps {
 
 export default function ProductItem({ product }: ProductItemProps) {
   const { image, category, title, description, price } = product;
+
+  const { addToCart } = useCart();
+
+  const handleAddToCart = () => {
+    addToCart(product);
+  };
 
   return (
     <Card className="pt-0 group hover:shadow-lg shadow-primary/20 transition-all duration-300">
@@ -43,7 +50,7 @@ export default function ProductItem({ product }: ProductItemProps) {
       </CardContent>
       <CardFooter className="px-5">
         <CardAction className="w-full">
-          <Button className="w-full">
+          <Button className="w-full" onClick={handleAddToCart}>
             <ShoppingCart /> Add to Cart
           </Button>
         </CardAction>

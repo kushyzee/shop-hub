@@ -9,14 +9,17 @@ export interface Product {
   title: string;
   description: string;
   price: number;
-  quantity?: number;
+}
+
+export interface CartItems extends Product {
+  quantity: number;
 }
 
 export interface CartContextType {
-  cartItems: Product[];
+  cartItems: CartItems[];
   addToCart: (product: Product) => void;
-  removeFromCart: (productId: number) => void;
-  clearCart: () => void;
+  // removeFromCart: (productId: number) => void;
+  // clearCart: () => void;
 }
 
 export interface CartReducerType {
@@ -24,7 +27,16 @@ export interface CartReducerType {
   dispatch: Dispatch<CartReducerAction>;
 }
 
-export interface CartReducerAction {
-  type: "ADD_ITEM" | "REMOVE_ITEM" | "CLEAR_CART";
-  payload: Product;
-}
+export type CartReducerAction =
+  | {
+      type: "ADD_ITEM";
+      payload: Product;
+    }
+  | {
+      type: "REMOVE_ITEM";
+      payload: { id: number };
+    }
+  | {
+      type: "CLEAR_CART";
+      payload: null;
+    };

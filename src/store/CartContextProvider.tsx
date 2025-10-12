@@ -1,12 +1,9 @@
-import { createContext, useReducer, type ReactNode } from "react";
-import type {
-  CartContextType,
-  CartReducerAction,
-  Product,
-} from "../types/myTypes";
+import { useReducer, type ReactNode } from "react";
+import type { CartItems, CartReducerAction, Product } from "../types/myTypes";
+import { CartContext } from "./cartContext";
 
 // reducer function
-function cartReducer(cart: Product[], action: CartReducerAction) {
+function cartReducer(cart: CartItems[], action: CartReducerAction) {
   const { payload, type } = action;
 
   switch (type) {
@@ -15,7 +12,7 @@ function cartReducer(cart: Product[], action: CartReducerAction) {
       if (existingItem) {
         return cart.map((item) =>
           item.id === payload.id
-            ? { ...payload, quantity: (item.quantity || 1) + 1 }
+            ? { ...payload, quantity: item.quantity + 1 }
             : item
         );
       } else {
@@ -28,20 +25,15 @@ function cartReducer(cart: Product[], action: CartReducerAction) {
   }
 }
 
-const CartContext = createContext({
-  cartItems: [],
-  addToCart: (product: Product) => {},
-});
-
 export default function CartProvider({ children }: { children: ReactNode }) {
-  const [cart, dispatch] = useReducer(cartReducer, []);
+  const [cartState, cartDispatch] = useReducer(cartReducer, []);
 
   const addToCart = (product: Product) => {
-    dispatch({ type: "ADD_ITEM", payload: product });
+    cartDispatch({ type: "ADD_ITEM", payload: product });
   };
 
   const contextValue = {
-    cartItems: cart,
+    cartItems: cartState,
     addToCart,
   };
 

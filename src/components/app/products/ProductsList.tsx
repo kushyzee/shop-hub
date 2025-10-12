@@ -1,8 +1,13 @@
 import ProductItem from "./ProductItem";
 import { products } from "../../../lib/productData";
 import FilterSheet from "./FilterSheet";
+import { useCart } from "../../../hooks/customHooks";
 
 export default function ProductsList() {
+  const { cartItems } = useCart();
+
+  console.log(cartItems);
+
   return (
     <section className="mt-6">
       <div className="flex justify-between items-center mb-4">
