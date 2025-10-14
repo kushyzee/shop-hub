@@ -3,6 +3,7 @@ import { useCart } from "../../../hooks/customHooks";
 import { Button } from "../../ui/button";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetDescription,
   SheetFooter,
@@ -12,9 +13,14 @@ import {
 } from "../../ui/sheet";
 import CartItems from "./CartItems";
 import EmptyCart from "./EmptyCart";
-import { formatCurrency } from "../../../lib/myFunctions";
+import { type Dispatch, type SetStateAction } from "react";
+import OrderSummary from "./OrderSummary";
 
-export default function Cart() {
+interface CartProps {
+  setIsCheckout: Dispatch<SetStateAction<boolean>>;
+}
+
+export default function Cart({ setIsCheckout }: CartProps) {
   const {
     cartState,
     addToCart,
@@ -28,19 +34,8 @@ export default function Cart() {
     0
   );
 
-  const calculateSubtotal = () => {
-    return cartState.reduce(
-      (total, item) => total + item.price * item.quantity,
-      0
-    );
-  };
-
-  const calculateTax = (tax: number) => {
-    return calculateSubtotal() * (tax / 100);
-  };
-
-  const calculateTotal = () => {
-    return calculateSubtotal() + calculateTax(10);
+  const handleCheckoutClick = () => {
+    setIsCheckout(true);
   };
 
   return (
@@ -76,30 +71,17 @@ export default function Cart() {
               removeFromCart={removeFromCart}
             />
             <SheetFooter className="border-t border-muted-foreground/30">
-              <div className="pb-2 border-b border-muted-foreground/30 text-sm space-y-2">
-                <div className="flex justify-between items-center">
-                  <p className="text-muted-foreground">Subtotal</p>
-                  <p className="font-semibold">
-                    {formatCurrency(calculateSubtotal())}
-                  </p>
-                </div>
-                <div className="flex justify-between items-center">
-                  <p className="text-muted-foreground">Tax (10%)</p>
-                  <p className="font-semibold">
-                    {formatCurrency(calculateTax(10))}
-                  </p>
-                </div>
-              </div>
-              <div className="flex justify-between items-center">
-                <p className="font-semibold text-lg">Total</p>
-                <p className="font-bold text-primary text-xl">
-                  {formatCurrency(calculateTotal())}
-                </p>
-              </div>
+              <OrderSummary isCheckout={false} cartState={cartState} />
               <div>
-                <Button className="w-full mb-2" size="lg">
-                  Proceed to Checkout
-                </Button>
+                <SheetClose className="w-full" asChild>
+                  <Button
+                    className="w-full mb-2"
+                    size="lg"
+                    onClick={handleCheckoutClick}
+                  >
+                    Proceed to Checkout
+                  </Button>
+                </SheetClose>
                 <Button
                   className="w-full"
                   size="lg"

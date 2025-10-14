@@ -45,3 +45,18 @@ export type CartReducerAction =
       type: "CLEAR_CART";
       payload: null;
     };
+
+export type FieldId =
+  | "name"
+  | "email"
+  | "phone"
+  | "address"
+  | "city"
+  | "state"
+  | "zip";
+export interface FormFields {
+  id: FieldId;
+  label: string;
+  type: string;
+  placeholder: string;
+}

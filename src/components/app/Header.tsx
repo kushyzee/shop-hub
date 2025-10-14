@@ -1,7 +1,12 @@
 import { Store } from "lucide-react";
 import Cart from "./cart/Cart";
+import type { Dispatch, SetStateAction } from "react";
 
-export default function Header() {
+interface HeaderProps {
+  setIsCheckout: Dispatch<SetStateAction<boolean>>;
+}
+
+export default function Header({ setIsCheckout }: HeaderProps) {
   return (
     <header className="fixed top-0 left-0 right-0 border-b border-border shadow-md z-40 bg-background/60 backdrop-blur-2xl">
       <div className="flex justify-between items-center p-4 max-w-7xl mx-auto">
@@ -11,7 +16,7 @@ export default function Header() {
           </div>
           <p className="font-bold text-xl md:text-2xl">ShopHub</p>
         </div>
-        <Cart />
+        <Cart setIsCheckout={setIsCheckout} />
       </div>
     </header>
   );
