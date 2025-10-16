@@ -1,5 +1,7 @@
 import type { Dispatch } from "react";
 
+export type Page = "home" | "checkout" | "orderSuccess";
+
 type Category = "Electronics" | "Accessories" | "Footwear" | "Home" | "Fitness";
 
 export interface Product {
@@ -53,11 +55,21 @@ export type FieldId =
   | "address"
   | "city"
   | "state"
-  | "zip";
+  | "zip"
+  | "cardNumber"
+  | "cardExpiry"
+  | "cardCvv";
+
 export interface FormFields {
   id: FieldId;
   label: string;
   type: string;
   placeholder: string;
   autoComplete: string;
+}
+
+export interface CreditCardItems {
+  id: FieldId;
+  label: "Card Number" | "Card Expiry" | "Card Cvv";
+  type: "number" | "date";
 }

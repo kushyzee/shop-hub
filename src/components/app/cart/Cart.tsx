@@ -15,12 +15,13 @@ import CartItems from "./CartItems";
 import EmptyCart from "./EmptyCart";
 import { type Dispatch, type SetStateAction } from "react";
 import OrderSummary from "./OrderSummary";
+import type { Page } from "../../../types/myTypes";
 
 interface CartProps {
-  setIsCheckout: Dispatch<SetStateAction<boolean>>;
+  setPage: Dispatch<SetStateAction<Page>>;
 }
 
-export default function Cart({ setIsCheckout }: CartProps) {
+export default function Cart({ setPage }: CartProps) {
   const {
     cartState,
     addToCart,
@@ -35,7 +36,7 @@ export default function Cart({ setIsCheckout }: CartProps) {
   );
 
   const handleCheckoutClick = () => {
-    setIsCheckout(true);
+    setPage("checkout");
   };
 
   return (

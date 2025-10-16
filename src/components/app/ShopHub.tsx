@@ -2,15 +2,19 @@ import { useState } from "react";
 import Header from "./Header";
 import Products from "./products/Products";
 import Checkout from "./checkout/Checkout";
+import type { Page } from "../../types/myTypes";
+import OrderSuccess from "./checkout/OrderSuccess";
 
 export default function ShopHub() {
-  const [isCheckout, setIsCheckout] = useState(false);
+  const [page, setPage] = useState<Page>("home");
 
   return (
     <>
-      <Header setIsCheckout={setIsCheckout} />
+      <Header setPage={setPage} />
       <main className="p-4 pt-26">
-        {isCheckout ? <Checkout setIsCheckout={setIsCheckout} /> : <Products />}
+        {page === "home" && <Products />}
+        {page === "checkout" && <Checkout setPage={setPage} />}
+        {page === "orderSuccess" && <OrderSuccess setPage={setPage} />}
       </main>
     </>
   );

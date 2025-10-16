@@ -1,4 +1,5 @@
 import type { FormFields } from "../types/myTypes";
+import * as Z from "zod";
 
 export const truncateString = (str: string, maxLength: number = 77) => {
   if (str.length <= maxLength) {
@@ -65,3 +66,43 @@ export const formFields: FormFields[] = [
     autoComplete: "postal-code",
   },
 ];
+
+export const formSchema = Z.object({
+  name: Z.string().trim().min(3, "Name must be at least 3 characters long"),
+  email: Z.email("Please enter a valid email address"),
+  phone: Z.string()
+    .refine((value) => /^\d+$/.test(value), {
+      message: "Enter a valid phone number",
+    })
+    .min(11, "Phone number must be 11 digits long"),
+  address: Z.string().trim().min(5, "Please enter a valid address"),
+  city: Z.string().trim().min(3, "Please enter a valid city"),
+  state: Z.string().trim().min(3, "Please enter a valid state"),
+  zip: Z.string().trim().min(5, "Please enter a valid zip code"),
+  paymentMethod: Z.enum(["Card", "PayPal", "Bank Transfer"]),
+  cardNumber: Z.string(),
+  cardExpiry: Z.string(),
+  cardCvv: Z.string(),
+}).superRefine((data, ctx) => {
+  if (data.paymentMethod === "Card") {
+    if (!data.cardNumber?.trim()) {
+      ctx.addIssue({
+        code: "custom",
+        message: "Card number is required",
+        path: ["cardNumber"],
+      });
+    } else if (!data.cardExpiry) {
+      ctx.addIssue({
+        code: "custom",
+        message: "Expiry date is required",
+        path: ["cardExpiry"],
+      });
+    } else if (!data.cardCvv?.trim()) {
+      ctx.addIssue({
+        code: "custom",
+        message: "Card Cvv is required",
+        path: ["cardCvv"],
+      });
+    }
+  }
+});
