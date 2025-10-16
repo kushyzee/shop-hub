@@ -59,4 +59,5 @@ export interface FormFields {
   label: string;
   type: string;
   placeholder: string;
+  autoComplete: string;
 }
