@@ -7,7 +7,7 @@ export default function YourOrder() {
   const { cartState } = useCart();
 
   return (
-    <div className="mt-10">
+    <div className="mt-10 lg:mt-0">
       <h2 className="text-2xl font-bold mb-3">Your order</h2>
       <Card>
         <CardContent className="space-y-3 max-h-72 overflow-auto pb-4 border-b border-muted-foreground/30">

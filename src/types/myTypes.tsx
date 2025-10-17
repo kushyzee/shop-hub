@@ -1,4 +1,4 @@
-import type { Dispatch } from "react";
+import type { Dispatch, SetStateAction } from "react";
 
 export type Page = "home" | "checkout" | "orderSuccess";
 
@@ -72,4 +72,9 @@ export interface CreditCardItems {
   id: FieldId;
   label: "Card Number" | "Card Expiry" | "Card Cvv";
   type: "number" | "date";
+}
+
+export interface FilterProps {
+  value: string;
+  setValue: Dispatch<SetStateAction<string>>;
 }

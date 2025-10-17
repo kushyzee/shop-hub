@@ -11,7 +11,7 @@ export default function ShopHub() {
   return (
     <>
       <Header setPage={setPage} />
-      <main className="p-4 pt-26">
+      <main className="p-4 pt-26 lg:px-8 max-w-[2000px] mx-auto">
         {page === "home" && <Products />}
         {page === "checkout" && <Checkout setPage={setPage} />}
         {page === "orderSuccess" && <OrderSuccess setPage={setPage} />}
